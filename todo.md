@@ -5,30 +5,48 @@
 
 ## HTML
 
-0. mark all finished/unfinished button
+0. mark all finished/unfinished button  [X]
 
-1. note template
-    * layout
-    * checkbox
-    * textbox
-    * delete button
+1. note template                        [X]
+    * layout (div)                      [X]
+    * checkbox                          [X]
+    * textbox                           [X]
+    * delete button                     [X]
 
 2. bottom dashboard
-    * layout
-    * items left counter
-    * show all button
-    * show active button
-    * show completed button
-    * clear completed button
+    * layout                            [X]
+    * items left counter                [X]
+    * show all button                   [X]
+    * show active button                [X]
+    * show completed button             [X]
+    * clear completed button            [X]
 
-3. bottom fine print text
+3. bottom fine print text               [X]
 
 
 ## CSS
 
-0. shadow effect around content
+
 1. make design look the same
-1. ask kallin about responsive design
+    * fine print                        [X]
+    * new item box                      [X]
+    * note template
+
+3. note template
+    * layout
+
+4. bottom dashboard
+    * layout
+
+5. font design
+
+6. colors
+
+7. sizes
+
+5. shadow effect around content
+
+6. ask kallin about responsive design, note edit box covering delete button
 
 
 ## JS
