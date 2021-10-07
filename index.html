@@ -10,10 +10,41 @@
 <body>
     <header>
         <h1>todos</h1>
-        <input type= "search" class="new-item" placeholder="What needs to be done?">
     </header>
-    <section class="main">
+    <main>
+        <div id="input">
+            <input type="checkbox" id="mark-all-complete">
+            <label for="mark-all-complete"></label>
+            <input id="new-item" placeholder="What needs to be done?" autofocus>
+        </div>
+        <ul id="notes">
+        <li><div id="note-template">
+            <input type="checkbox" id="mark-complete">
+            <!---<input id="edit" type="search">
+            <label for="edit"></label>--->
+            <p id="note-text">Lorem Ipsum is simply</p>
+            <button id="delete">❌</button>
+        </div></li>
 
-    </section>
+    </ul>
+        <div id="dashboard">
+            <span id=""></span>
+            <input type="checkbox" id="all">
+            <label for="all"></label>
+            <input type="checkbox" id="active">
+            <label for="active"></label>
+            <input type="checkbox" id="completed">
+            <label for="completed"></label>
+            <input type="button" id="clear">
+            <label for="clear">Clear completed</label>
+
+        </div>
+    </main>
+    <footer>
+        <p>Double-click to edit a todo</p>
+        <p>Written by <a href="https://github.com/nlandegren">Nils Landegren</a> and
+        <a href="https://github.com/ErikStenberg1">Erik Stenberg</a></p>
+        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
 </body>
 </html>
