@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     margin: auto;
     text-align: center;
@@ -123,12 +129,55 @@ button {
 }
 */
 #dashboard {
+    display: flex;
     background: white;
+    justify-content: space-between;
+    padding: 10px 15px;
+    color: #777;
+}
 
+#items-left-counter:hover {
+    cursor: default;
+}
+
+#all, #active, #completed, #clear {
+    display: none;
+}
+
+#filter-buttons li{
+    display: inline-block;
+}
+
+#filter-buttons label {
+    padding: 3px 7px;
+    margin: 3px;
+}
+
+#filter-buttons input:checked + label {
+    border: 1px solid rgba(175, 47, 47, 0.2);
+    border-radius: 3px;
+}
+
+#filter-buttons input:hover + label {
+    cursor: pointer;
+}
+
+#clear:hover + label{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+footer {
+    color: #bfbfbf;
+    font-size: 10px;
+    margin-top: 65px;
+}
+footer p {
+    padding: 5px;
 }
 
 footer a{
-    color: inherit;
+    color: #bfbfbf;
     text-decoration: none;
 }
 
