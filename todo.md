@@ -26,27 +26,17 @@
 
 ## CSS
 
+1. new item box                         [X]
+2. note template                        [X]
+3. bottom dashboard                     [X]
+4. fine print                           [X]
+    
+5. font design                          [X]
+6. colors                               [X]
+7. sizes                                [X]
+8. shadow effect around content         [X]
 
-1. make design look the same
-    * fine print                        [X]
-    * new item box                      [X]
-    * note template
-
-3. note template
-    * layout
-
-4. bottom dashboard
-    * layout
-
-5. font design
-
-6. colors
-
-7. sizes
-
-5. shadow effect around content
-
-6. ask kallin about responsive design, note edit box covering delete button
+9. ask kallin about responsive design, note edit box covering delete button
 
 
 ## JS
