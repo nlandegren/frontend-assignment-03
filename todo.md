@@ -41,13 +41,32 @@
 
 ## JS
 
-1. add note
-2. delete note
-3. check completed on note
-4. unfinished notes counter
-5. mark all finished/unfinished button
-6. delete all completed
-7. display all finished/unfinished/both
+
+Note functionality
+    * add new note                      [X]
+    * delete note                       [X]
+    * mark note as finished             [X]
+    * clear input field when add new note [X]
+
+Mark all complete button
+    * make visible on add note          [X]
+    * hide on no notes                  [X]
+    * check/uncheck all notes           [X]
+
+Dashboard functionality
+    * items left counter                [X]
+    * display all finished/unfinished/both [X]
+    * clear completed functionality     [X]
+    * hide clear completed on no checked [X]
+    * hide dashboard on no notes        [X]
+    
+Problem/extras
+    * paper stack effect (because it was easy) [X]
+    * we have same id on every note/ id on template is note deleted
+    * align the input text and mark all complete checkbox with notes under
+    * mark all complete checkbox to change color when all checked/unchecked?
+    * increase size of checkboxes
+
 
 
 ## tests

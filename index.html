@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="todo.js" defer></script>
 </head>
 <body>
     <header>
@@ -14,32 +15,31 @@
     <main>
         <div id="input">
             <input type="checkbox" id="mark-all-complete">
-            <label for="mark-all-complete"></label>
-            <input id="new-item" placeholder="What needs to be done?" autofocus>
+            <label for="mark-all-complete">🔽</label>
+            <input type="text" id="new-item" placeholder="What needs to be done?" autofocus>
         </div>
         <ul id="notes">
-        <li><div id="note-template">
-            <input type="checkbox" id="mark-complete">
-            <!---<input id="edit" type="search">
-            <label for="edit"></label>--->
-            <p id="note-text">Lorem Ipsum is simply</p>
-            <button id="delete">❌</button>
-        </div></li>
-
-    </ul>
+            <li id="note-template">
+                <input type="checkbox" id="mark-complete">
+                <!---<input id="edit" type="search">
+                <label for="edit"></label>--->
+                <p id="note-text">Lorem Ipsum is simply</p>
+                <button type="button" id="delete">❌</button>
+            </li>
+        </ul>
         <div id="dashboard">
-            <span id="items-left-counter">1 items left</span>
+            <span id="items-left-counter">0 items left</span>
             <ul id="filter-buttons">
                 <li>
-                    <input type="radio" id="all">
+                    <input type="radio" id="all" name="filter-button" checked="checked">
                     <label for="all">All</label>
                 </li>
                 <li>
-                    <input type="radio" id="active">
+                    <input type="radio" id="active" name="filter-button">
                     <label for="active">Active</label>
                 </li>
                 <li>
-                    <input type="radio" id="completed">
+                    <input type="radio" id="completed" name="filter-button">
                     <label for="completed">Completed</label>
                 </li>
             </ul>
