@@ -30,6 +30,49 @@ namespace EdgeDriverTest1
 
             Assert.AreEqual(loremIpsum, note.Text);
         }
+        [TestMethod]
+        public void ExampleTest1()
+        {
+            // Replace with your own test logic.
+            browser.Url = "http://127.0.0.1:5500/index.html";
+            string loremIpsum = "Lorem Ipsum";
+            var newItemInput = browser.FindElementByCssSelector("#new-item");
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            var dashboard = browser.FindElementByCssSelector("#dashboard");
+            var itemsLeftCounter = browser.FindElementByCssSelector("#dashboard #items-left-counter");
+
+            Assert.AreEqual("1 item left", itemsLeftCounter.Text);
+
+            var checkBox = browser.FindElementByCssSelector("#mark-complete");
+            checkBox.Click();
+
+            Assert.AreEqual("0 items left", itemsLeftCounter.Text);
+
+        }
+
+        [TestMethod]
+        public void ExampleTest2()
+        {
+            // Replace with your own test logic.
+            browser.Url = "http://127.0.0.1:5500/index.html";
+            string loremIpsum = "Lorem Ipsum";
+            var newItemInput = browser.FindElementByCssSelector("#new-item");
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            var dashboard = browser.FindElementByCssSelector("#dashboard");
+            var itemsLeftCounter = browser.FindElementByCssSelector("#dashboard #items-left-counter");
+
+            var checkBox = browser.FindElementByCssSelector("#mark-complete");
+            checkBox.Click();
+
+            Assert.AreEqual("2 items left", itemsLeftCounter.Text);
+
+        }
 
         //[TestMethod]
         //public void BMITest() 
