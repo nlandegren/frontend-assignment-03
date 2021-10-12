@@ -36,6 +36,8 @@
 7. sizes                                [X]
 8. shadow effect around content         [X]
 
+
+
 9. ask kallin about responsive design, note edit box covering delete button
 
 
@@ -63,7 +65,7 @@ Dashboard functionality
 Problem/extras
     * paper stack effect (because it was easy) [X]
     * we have same id on every note/ id on template is note deleted
-    * align the input text and mark all complete checkbox with notes under
+    * align the input text and mark all complete checkbox with notes under          [X]
     * mark all complete checkbox to change color when all checked/unchecked?
     * increase size of checkboxes
 
