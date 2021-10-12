@@ -83,8 +83,39 @@ function createNewNote(template, content){
     // Clone note template.
     const newNote = template.cloneNode(true);
     // Add note content.
-    newNote.querySelector("p").textContent = content;
-    
+    const noteInput = newNote.querySelector("#note-text");
+    noteInput.value = content;
+    noteInput.ondblclick = event => {
+        noteInput.readOnly = false;
+        // Replace value to remove highligting.
+        const oldValue = noteInput.value;
+        noteInput.value = "";
+        noteInput.value = oldValue;
+        noteInput.classList.add('note-focused');
+        newNote.querySelector("#mark-complete").style.visibility = "hidden";
+        newNote.querySelector("#delete").style.display = "none";
+    };
+    noteInput.onblur = event => {
+        noteInput.readOnly = true;
+        if(noteInput.value === "") {
+            newNote.remove();
+        }
+        noteInput.classList.remove('note-focused');
+        newNote.querySelector("#mark-complete").style.visibility = "visible";
+        newNote.querySelector("#delete").style.display = "block";
+    };
+    noteInput.onkeydown = event => {
+        // If enter was pressed and input has a value.
+        if (event.keyCode === 13) {
+            noteInput.readOnly = true;
+            if(noteInput.value === "") {
+                newNote.remove();
+            }
+            noteInput.classList.remove('note-focused');
+            newNote.querySelector("#mark-complete").style.visibility = "visible";
+            newNote.querySelector("#delete").style.display = "block";
+        }
+    };
     // Get the delete button.
     const deleteButton = newNote.querySelector("#delete");
     

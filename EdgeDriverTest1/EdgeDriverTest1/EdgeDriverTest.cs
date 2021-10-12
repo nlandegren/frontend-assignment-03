@@ -17,7 +17,7 @@ namespace EdgeDriverTest1
         }
 
         [TestMethod]
-        public void ExampleTest()
+        public void AddNote()
         {
             // Replace with your own test logic.
             browser.Url = "http://127.0.0.1:5500/index.html";
@@ -25,13 +25,12 @@ namespace EdgeDriverTest1
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
             newItemInput.SendKeys(Keys.Enter);
-            var noteList = browser.FindElementByCssSelector("#notes");
             var note = browser.FindElementByCssSelector("#notes #note-text");
 
             Assert.AreEqual(loremIpsum, note.Text);
         }
         [TestMethod]
-        public void ExampleTest1()
+        public void ZeroItemsLeft()
         {
             // Replace with your own test logic.
             browser.Url = "http://127.0.0.1:5500/index.html";
@@ -39,7 +38,6 @@ namespace EdgeDriverTest1
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
             newItemInput.SendKeys(Keys.Enter);
-            var dashboard = browser.FindElementByCssSelector("#dashboard");
             var itemsLeftCounter = browser.FindElementByCssSelector("#dashboard #items-left-counter");
 
             Assert.AreEqual("1 item left", itemsLeftCounter.Text);
@@ -52,7 +50,7 @@ namespace EdgeDriverTest1
         }
 
         [TestMethod]
-        public void ExampleTest2()
+        public void TwoItemsLeft()
         {
             // Replace with your own test logic.
             browser.Url = "http://127.0.0.1:5500/index.html";
@@ -64,7 +62,6 @@ namespace EdgeDriverTest1
             newItemInput.SendKeys(Keys.Enter);
             newItemInput.SendKeys(loremIpsum);
             newItemInput.SendKeys(Keys.Enter);
-            var dashboard = browser.FindElementByCssSelector("#dashboard");
             var itemsLeftCounter = browser.FindElementByCssSelector("#dashboard #items-left-counter");
 
             var checkBox = browser.FindElementByCssSelector("#mark-complete");
