@@ -38,6 +38,10 @@ window.onload = event => {
     changeNoteFilter(location.hash, noteList);
 };
 
+window.onhashchange = event =>{
+    changeNoteFilter(location.hash, noteList);
+}
+
 
 // Add event handler for making new note.
 newItemInput.onkeydown = event => {
