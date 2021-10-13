@@ -21,7 +21,7 @@ namespace EdgeDriverTest1
         public void AddNote()
         {
             // Replace with your own test logic.
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string loremIpsum = "Lorem Ipsum";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
@@ -34,7 +34,7 @@ namespace EdgeDriverTest1
         public void ZeroItemsLeft()
         {
             // Replace with your own test logic.
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string loremIpsum = "Lorem Ipsum";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
@@ -54,7 +54,7 @@ namespace EdgeDriverTest1
         public void TwoItemsLeft()
         {
             // Replace with your own test logic.
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string loremIpsum = "Lorem Ipsum";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
@@ -74,7 +74,7 @@ namespace EdgeDriverTest1
         [TestMethod]
         public void EditNote()
         {
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string firstText = "Lorem Ipsum";
             string secondText = "Ipsum Lorem";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
@@ -96,7 +96,7 @@ namespace EdgeDriverTest1
         [TestMethod]
         public void UrlChangeByFilterChange()
         {
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string loremIpsum = "Lorem Ipsum";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
@@ -104,13 +104,13 @@ namespace EdgeDriverTest1
             var activeFilterButton = browser.FindElementByCssSelector("#active + label");
             activeFilterButton.Click();
 
-            Assert.AreEqual(browser.Url, "http://127.0.0.1:5500/index.html#active");
+            Assert.AreEqual(browser.Url, "https://nlandegren.github.io/frontend-assignment-03/#active");
         }
 
         [TestMethod]
         public void UrlChangeByPreviousPage()
         {
-            browser.Url = "http://127.0.0.1:5500/index.html";
+            browser.Url = "https://nlandegren.github.io/frontend-assignment-03/";
             string loremIpsum = "Lorem Ipsum";
             var newItemInput = browser.FindElementByCssSelector("#new-item");
             newItemInput.SendKeys(loremIpsum);
@@ -123,7 +123,7 @@ namespace EdgeDriverTest1
 
             browser.Navigate().Back();
 
-            Assert.AreEqual(browser.Url, "http://127.0.0.1:5500/index.html#active");
+            Assert.AreEqual(browser.Url, "https://nlandegren.github.io/frontend-assignment-03/#active");
         }
 
 
