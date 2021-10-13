@@ -1,100 +1,103 @@
 
-// Get the new note input box.
 const newItemInput = document.getElementById("new-item");
 
-// Get the label for the mark all complete checkbox.
 const markAllCompleteLabel = document.querySelector("#mark-all-complete + label");
 
-// Get the mark all complete checkbox.
 const markAllCompleteInput = document.querySelector("#mark-all-complete");
 
-// Get the note template.
 const noteTemplate = document.getElementById("note-template");
 noteTemplate.remove();
 delete noteTemplate.id;
 
-// Get the list to add notes to.
 const noteList = document.getElementById("notes");
 
-// Get the dashboard div.
 const dashboard = document.getElementById("dashboard");
 
-// Get the main element.
 const main = document.querySelector("main");
 
-// Get the clear all button.
 const clearButton = document.getElementById("clear");
 
-// Get the label associated with the clear button.
 const clearButtonLabel = document.querySelector("#clear + label");
+
 
 clearButton.onclick = event => {
     clearCompleted(noteList);
 }
 
-
 // Make mutation observer to update page content when notes change.
 const config = { attributes: true, childList: true, subtree: true };
 const callback = function(mutationsList, observer){
     countNotes(noteList);
+    saveToLocalStorage();
 };
 const observer = new MutationObserver(callback);
 observer.observe(main, config);
+
+window.onload = event => {
+    loadFromLocalStorage();
+    changeNoteFilter(location.hash, noteList);
+};
+
 
 // Add event handler for making new note.
 newItemInput.onkeydown = event => {
     // If enter was pressed and input has a value.
     if (event.keyCode === 13 && newItemInput.value) {
-        // Make new note.
-        let note = createNewNote(noteTemplate, newItemInput.value);
-        noteList.appendChild(note);
+        createNewNote(noteTemplate, newItemInput.value);
         // Empty the input field.
         newItemInput.value = null;
-        // Change parts of page depending on number of notes.
     }
 };
 
-// Add event handler for marking all complete/incomplete.
+
 markAllCompleteInput.onchange = event => {
-    // Get all notes.
     const notes = noteList.querySelectorAll("li");
     markAllAsComplete(markAllCompleteInput, notes);
 };
 
-// Add event handler to All filter.
 const allFilterInput = dashboard.querySelector("#all");
 allFilterInput.onclick = event => {
-    changeNoteFilter("all", noteList);
+    location.hash = "all";
+    changeNoteFilter(location.hash, noteList);
 };
 
-// Add event handler to Active filter.
+
 const activeFilterInput = dashboard.querySelector("#active");
 activeFilterInput.onclick = event => {
-    changeNoteFilter("active", noteList);
+    location.hash = "active";
+    changeNoteFilter(location.hash, noteList);
 };
 
-// Add event handler to Completed filter.
+
 const completedFilterInput = dashboard.querySelector("#completed");
 completedFilterInput.onclick = event => {
-    changeNoteFilter("completed", noteList);
+    location.hash = "completed";
+    changeNoteFilter(location.hash, noteList);
 };
 
-function createNewNote(template, content){
+function createNewNote(template, content, finished = false){
     // Clone note template.
     const newNote = template.cloneNode(true);
     // Add note content.
     const noteInput = newNote.querySelector("#note-text");
     noteInput.value = content;
+    
     noteInput.ondblclick = event => {
+        // Make note editable.
         noteInput.readOnly = false;
+
         // Replace value to remove highligting.
         const oldValue = noteInput.value;
         noteInput.value = "";
         noteInput.value = oldValue;
+
+        // Display border and shadow with note-focused class.
         noteInput.classList.add('note-focused');
+        // Hide mark complete button and delete button while editing.
         newNote.querySelector("#mark-complete").style.visibility = "hidden";
         newNote.querySelector("#delete").style.display = "none";
     };
+    // Unfocus event (e.g. clicking away).
     noteInput.onblur = event => {
         noteInput.readOnly = true;
         if(noteInput.value === "") {
@@ -105,7 +108,7 @@ function createNewNote(template, content){
         newNote.querySelector("#delete").style.display = "block";
     };
     noteInput.onkeydown = event => {
-        // If enter was pressed and input has a value.
+        // If enter was pressed.
         if (event.keyCode === 13) {
             noteInput.readOnly = true;
             if(noteInput.value === "") {
@@ -116,35 +119,28 @@ function createNewNote(template, content){
             newNote.querySelector("#delete").style.display = "block";
         }
     };
-    // Get the delete button.
     const deleteButton = newNote.querySelector("#delete");
-    
-    // Get the mark complete button.
-    const markComplete = newNote.querySelector("#mark-complete");
 
-    // Add event handler for deleting.
+    const markComplete = newNote.querySelector("#mark-complete");
+    
+    // Set the status of note loaded from localStorage.
+    markComplete.checked = finished;
+
     deleteButton.onclick = event => {
-        deleteNote(newNote);
+        newNote.remove();
     };
 
-    // Add event handler for marking as finished.
     markComplete.onchange = event => {
         markAsComplete(newNote, markComplete);
     }
-
-    return newNote;
-}
-
-
-function deleteNote(note){
-    note.remove();
+    noteList.appendChild(newNote);
 }
 
 
 function markAsComplete(note, checkbox){
-    // Get p element in note.
-    const noteText = note.querySelector("p");
-    // Change style if marked as complete.
+
+    const noteText = note.querySelector("#note-text");
+    // Change style if marked as finished/unfinished.
     if (checkbox.checked){
         noteText.style.textDecoration = "line-through";
         noteText.style.color = "#d9d9d9";
@@ -157,6 +153,7 @@ function markAsComplete(note, checkbox){
 
 
 function markAllAsComplete(checkbox, notes){
+    
     if(checkbox.checked){
         for (const note of notes) {
             const noteCheckbox = note.querySelector("#mark-complete");
@@ -178,13 +175,11 @@ function countNotes(noteList){
     let numberOfUnfinished = 0;
     let numberOfFinished = 0;
     if (numberOfNotes > 0){
-        // Reveal the mark all complete button.
         markAllCompleteLabel.style.visibility = "visible";
         // Reveal dashboard.
         dashboard.style.display = "flex";
     }
     else {
-        // Hide the mark all complete button.
         markAllCompleteLabel.style.visibility = "hidden";
         // Hide the dashboard.
         dashboard.style.display = "none";
@@ -210,27 +205,30 @@ function countNotes(noteList){
     else {
         itemsCounter.textContent = `${numberOfUnfinished} items left`;
     }
-    
-    // Display or hide clear completed button.
+
     if(numberOfFinished > 0){
         clearButtonLabel.style.visibility = "visible";
     }
     else{
         clearButtonLabel.style.visibility = "hidden";
     }
-
 }
 
 
 function changeNoteFilter(filter, noteList){
     const notes = noteList.querySelectorAll("li");
-    if (filter === "all") {
-        for (const note of notes) {
+    if (filter === "#all") {
+        // Click the filter button on page reload to highlight it.
+        dashboard.querySelector("#all").checked = true;
+        // Display all notes.
+        for (const note of notes) {            
             note.style.display = "flex";
         }
     }
-    else if(filter === "active")
+    else if(filter === "#active")
     {
+        dashboard.querySelector("#active").checked = true;
+        // Display only unfinished notes.
         for (const note of notes) {
             const noteCheckbox = note.querySelector("#mark-complete");
             if(noteCheckbox.checked){
@@ -241,7 +239,9 @@ function changeNoteFilter(filter, noteList){
             }
         }
     }
-    else if(filter === "completed"){
+    else if(filter === "#completed"){
+        dashboard.querySelector("#completed").checked = true;
+        // Display only finished notes.
         for (const note of notes) {
             const noteCheckbox = note.querySelector("#mark-complete");
             if(noteCheckbox.checked){
@@ -262,5 +262,31 @@ function clearCompleted(noteList){
         if(noteCheckbox.checked){
             note.remove();
         }
+    }
+}
+
+
+function saveToLocalStorage(){
+    // Clear previous notes to overwrite, not append.
+    localStorage.clear();
+
+    const notes = noteList.querySelectorAll("li");
+    for (let i = 0; i < notes.length; i++) {
+        const note = notes[i];
+        const text = note.querySelector("#note-text").value;
+        const progress = note.querySelector("#mark-complete").checked;
+        // Save the content of the note.
+        localStorage.setItem(`${i}-content`, text);
+        // Save the progress state of the note.
+        localStorage.setItem(`${i}-finished`, Number(progress));
+    }
+}
+
+function loadFromLocalStorage(){
+    // Grab content and progress properties for each note.
+    for (let i = 0; i < localStorage.length / 2; i++) {
+        const noteContent = localStorage.getItem(`${i}-content`);
+        const noteFinished = Number(localStorage.getItem(`${i}-finished`));
+        createNewNote(noteTemplate, noteContent, Boolean(noteFinished));
     }
 }

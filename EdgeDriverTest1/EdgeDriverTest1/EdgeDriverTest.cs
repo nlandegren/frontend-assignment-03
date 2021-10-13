@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 
 namespace EdgeDriverTest1
 {
@@ -27,7 +28,7 @@ namespace EdgeDriverTest1
             newItemInput.SendKeys(Keys.Enter);
             var note = browser.FindElementByCssSelector("#notes #note-text");
 
-            Assert.AreEqual(loremIpsum, note.Text);
+            Assert.AreEqual(loremIpsum, note.GetAttribute("value"));
         }
         [TestMethod]
         public void ZeroItemsLeft()
@@ -70,42 +71,61 @@ namespace EdgeDriverTest1
             Assert.AreEqual("2 items left", itemsLeftCounter.Text);
 
         }
+        [TestMethod]
+        public void EditNote()
+        {
+            browser.Url = "http://127.0.0.1:5500/index.html";
+            string firstText = "Lorem Ipsum";
+            string secondText = "Ipsum Lorem";
+            var newItemInput = browser.FindElementByCssSelector("#new-item");
+            newItemInput.SendKeys(firstText);
+            newItemInput.SendKeys(Keys.Enter);
+            var note = browser.FindElementByCssSelector("#notes #note-text");
+            Actions action = new Actions(browser);
 
-        //[TestMethod]
-        //public void BMITest() 
-        //{
-        //    browser.Url = "dashboardurl";
-        //    var weightInput = browser.FindElementByCssSelector("[name='weight']");
-        //    weightInput.SendKeys("70");
-        //    var heightInput = browser.FindElementByCssSelector("[name='height']");
-        //    heightInput.SendKeys("1.8");
-        //    heightInput.SendKeys(Keys.Enter);
-        //    var bmiOutput = browser.FindElementByCssSelector("[name='bmi']");
-        //    Assert.AreEqual("21.6", bmiOutput.Text);
-        //}
 
-        //[TestMethod]
-        //public void BMIHistoryTest()
-        //{
-        //    browser.Url = "dashboardurl";
-        //    var weightInput = browser.FindElementByCssSelector("[name='weight']");
-        //    weightInput.SendKeys("70");
-        //    var heightInput = browser.FindElementByCssSelector("[name='height']");
-        //    heightInput.SendKeys("1.8");
-        //    var button = browser.FindElementByCssSelector("button");
-        //    button.Click();
-        //    var listItem = browser.FindElementByCssSelector("#results li");
-        //    Assert.IsTrue(listItem.Text.StartsWith("21.6"));
+            action.DoubleClick(note).Build().Perform();
+            note.SendKeys(Keys.LeftControl + "a");
+            note.SendKeys(Keys.Backspace);
+            note.SendKeys(secondText);
+            note.SendKeys(Keys.Enter);
 
-        //    weightInput.Clear();
-        //    weightInput.SendKeys("75");
-        //    button.Click();
+            Assert.AreEqual(secondText, note.GetAttribute("value"));
+        }
 
-        //    var listItems = browser.FindElementByCssSelector("#results li");
-        //    Assert.IsTrue(listItems[0].Text.StartsWith("21.6"));
-        //    Assert.IsTrue(listItems[1].Text.StartsWith("23.1"));
-        //    Assert.AreEqual(2, listItems.Count);
-        //}
+        [TestMethod]
+        public void UrlChangeByFilterChange()
+        {
+            browser.Url = "http://127.0.0.1:5500/index.html";
+            string loremIpsum = "Lorem Ipsum";
+            var newItemInput = browser.FindElementByCssSelector("#new-item");
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            var activeFilterButton = browser.FindElementByCssSelector("#active + label");
+            activeFilterButton.Click();
+
+            Assert.AreEqual(browser.Url, "http://127.0.0.1:5500/index.html#active");
+        }
+
+        [TestMethod]
+        public void UrlChangeByPreviousPage()
+        {
+            browser.Url = "http://127.0.0.1:5500/index.html";
+            string loremIpsum = "Lorem Ipsum";
+            var newItemInput = browser.FindElementByCssSelector("#new-item");
+            newItemInput.SendKeys(loremIpsum);
+            newItemInput.SendKeys(Keys.Enter);
+            var activeFilterButton = browser.FindElementByCssSelector("#active + label");
+            activeFilterButton.Click();
+
+            var completedFilterButton = browser.FindElementByCssSelector("#completed + label");
+            completedFilterButton.Click();
+
+            browser.Navigate().Back();
+
+            Assert.AreEqual(browser.Url, "http://127.0.0.1:5500/index.html#active");
+        }
+
 
         [TestCleanup]
         public void EdgeDriverCleanup()
